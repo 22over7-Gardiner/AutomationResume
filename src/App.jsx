@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Activity, Bot, CheckCircle2, Database, FileBarChart, GithubIcon, Mail, Menu, MonitorSmartphone, Network, ServerCog, ShieldCheck, X } from "lucide-react";
+import { Activity, Bot, CheckCircle2, Database, FileBarChart, Code2, Mail, Menu, MonitorSmartphone, Network, ServerCog, ShieldCheck, X } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const layers = [
@@ -44,7 +44,7 @@ function App() {
 
     <section id="about" className="wrap section"><p className="eyebrow">MY CONTRIBUTION</p><h2>Technical leadership across the workflow.</h2><div className="grid2"><article><h3>Concept development</h3><p>Translate a manufacturing opportunity into a focused proof-of-concept scope and learning plan.</p></article><article><h3>System integration</h3><p>Connect data, server services, application workflows, visualization, and report outputs.</p></article><article><h3>User-centered design</h3><p>Present technical information clearly for engineering and operational audiences.</p></article><article><h3>Technical communication</h3><p>Explain architecture, assumptions, limitations, manufacturing value, and next steps.</p></article></div></section>
 
-    <section className="contact wrap"><div><p className="eyebrow dark">PORTFOLIO CONVERSATION</p><h2>Discuss the path from prototype to scalable manufacturing capability.</h2></div><div className="contact-actions"><a href="mailto:David.Gardiner@nike.com"><Mail/> Email David</a><a href="https://github.com/22over7-Gardiner/AutomationResume" target="_blank" rel="noreferrer"><Github/> View repository</a></div></section>
+    <section className="contact wrap"><div><p className="eyebrow dark">PORTFOLIO CONVERSATION</p><h2>Discuss the path from prototype to scalable manufacturing capability.</h2></div><div className="contact-actions"><a href="mailto:David.Gardiner@nike.com"><Mail/> Email David</a><a href="https://github.com/22over7-Gardiner/AutomationResume" target="_blank" rel="noreferrer"><Code2/> View repository</a></div></section>
     <footer>© 2026 David Gardiner · No proprietary manufacturing data is displayed.</footer>
   </main>
 }
