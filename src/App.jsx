@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Activity, Bot, CheckCircle2, Database, FileBarChart, Github, Mail, Menu, MonitorSmartphone, Network, ServerCog, ShieldCheck, X } from "lucide-react";
+import { Activity, Bot, CheckCircle2, Database, FileBarChart, GithubIcon, Mail, Menu, MonitorSmartphone, Network, ServerCog, ShieldCheck, X } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const layers = [
