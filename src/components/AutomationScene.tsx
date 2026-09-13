@@ -1,0 +1,36 @@
+import React from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Bot, Workflow, ScanLine, Gauge, Database, TrendingUp, Pencil, Check, RotateCw } from 'lucide-react';
+
+type Key='robot'|'conveyor'|'scanner'|'monitor'|'server'|'tv';
+const INFO:Record<Key,{title:string;items:string[]}>= {
+ robot:{title:'Robotics',items:['Denso & ABB 6-axis robots','WinCaps III & RobotStudio','Cell integration & path programming','Pick-and-place material handling','RPA feasibility & ROI analysis']},
+ conveyor:{title:'Conveyor & Connectivity',items:['PLC logic & line controls','Pneumatic, hydraulic & electromechanical systems','Automated conveyor troubleshooting','IoT / IIoT connectivity','Sensor integration']},
+ scanner:{title:'Machine Vision',items:['Cognex machine-vision systems','Automated inspection & defect detection','Barcode traceability & data capture','Vision-guided robotics','Intranet data integration']},
+ monitor:{title:'HMI & SCADA',items:['HMI design & operator interfaces','SCADA monitoring & alarms','Real-time OEE dashboards','SAP, Smartsheet, Wrike, JMP & Excel','Data visualization & reporting']},
+ server:{title:'Data & Backend',items:['SQL databases & data pipelines','Automated collection & reporting','Backup & revision control','Controls-code version control','Applied AI tools for analysis']},
+ tv:{title:'Metrics & Industry 4.0',items:['KPIs & OEE metrics','Lean & Six Sigma improvement','Throughput & cycle-time gains','Industry 4.0 / IIoT architecture','Digital transformation roadmaps']}
+};
+const ICON:Record<Key,React.ComponentType<{className?:string}>>={robot:Bot,conveyor:Workflow,scanner:ScanLine,monitor:Gauge,server:Database,tv:TrendingUp};
+function portraitSmall(){return typeof window!=='undefined'&&matchMedia('(orientation: portrait)').matches&&matchMedia('(max-width: 900px)').matches}
+export function AutomationScene():React.ReactElement{
+ const reduce=useReducedMotion();const[phase,setPhase]=React.useState<'rotate'|'ready'>(()=>portraitSmall()?'rotate':'ready');const[step,setStep]=React.useState(0);const[selected,setSelected]=React.useState<Key|null>(null);const[editing,setEditing]=React.useState(false);const[content,setContent]=React.useState(()=>Object.fromEntries((Object.keys(INFO)as Key[]).map(k=>[k,[...INFO[k].items]]))as Record<Key,string[]>);const[draft,setDraft]=React.useState('');const[count,setCount]=React.useState(0);const[score,setScore]=React.useState(0);
+ React.useEffect(()=>{const m=matchMedia('(orientation: landscape)'),f=()=>{if(m.matches)setPhase('ready')};m.addEventListener('change',f);return()=>m.removeEventListener('change',f)},[]);
+ const x=[84,118,190,450,84,84][step]??84;const y=step===0||step>=4?181:126;const next:Key=['robot','conveyor','scanner','monitor','server','tv'][step] as Key;
+ const act=(k:Key)=>{setSelected(k);setEditing(false);if(k!==next)return;if(step===2)setCount(c=>c+1);if(step===3)setScore(s=>s+Math.max(1,count));setStep(s=>(s+1)%6)};
+ const save=()=>{if(selected)setContent(p=>({...p,[selected]:draft.split('\n').map(s=>s.trim()).filter(Boolean)}));setEditing(false)};
+ return <div className="relative aspect-[420/240] w-full overflow-hidden rounded-lg border border-border bg-surface">
+ <svg viewBox="0 0 420 240" className="absolute inset-0 h-full w-full" role="img" aria-label="Interactive automation line">
+  <line x1="0" y1="205" x2="420" y2="205" className="stroke-border" strokeWidth="2"/>
+  <g onClick={()=>act('tv')} className="cursor-pointer"><rect x="300" y="24" width="104" height="66" rx="4" className={`fill-surfaceAlt ${next==='tv'?'stroke-primary':'stroke-foreground'}`} strokeWidth="2"/><text x="312" y="48" className="fill-foreground" fontSize="10">Best · Score {score}</text><path d="M320 75 L340 60 360 68 386 48" className="fill-none stroke-primary" strokeWidth="2"/></g>
+  <g onClick={()=>act('conveyor')} className="cursor-pointer"><rect x="108" y="150" width="384" height="16" rx="8" className={`fill-surfaceAlt ${next==='conveyor'?'stroke-primary':'stroke-foreground'}`} strokeWidth="2"/><line x1="140" y1="166" x2="140" y2="205" className="stroke-foreground" strokeWidth="2"/><line x1="360" y1="166" x2="360" y2="205" className="stroke-foreground" strokeWidth="2"/></g>
+  <motion.g animate={{x,y}} transition={{duration:reduce?.05:.8}} onClick={()=>act(step===0?'robot':'conveyor')} className="cursor-pointer"><rect width="24" height="24" rx="3" className="fill-surface stroke-primary" strokeWidth="2"/><path d="M0 7H24M12 0V24" className="stroke-foregroundMuted"/></motion.g>
+  <g onClick={()=>act('scanner')} className="cursor-pointer"><line x1="202" y1="116" x2="202" y2="150" className="stroke-foreground" strokeWidth="2"/><rect x="185" y="96" width="34" height="20" rx="3" className={`fill-surface ${next==='scanner'?'stroke-primary':'stroke-foreground'}`} strokeWidth="2"/></g>
+  <g onClick={()=>act('monitor')} className="cursor-pointer"><rect x="230" y="118" width="52" height="38" rx="3" className={`fill-surface ${next==='monitor'?'stroke-primary':'stroke-foreground'}`} strokeWidth="2"/><text x="245" y="142" className="fill-foreground" fontSize="12">#{count}</text></g>
+  <g onClick={()=>act('server')} className="cursor-pointer"><rect x="312" y="116" width="40" height="86" rx="3" className={`fill-surface ${next==='server'?'stroke-primary':'stroke-foreground'}`} strokeWidth="2"/>{[126,142,158,174].map(v=><rect key={v} x="318" y={v} width="28" height="10" rx="1" className="fill-surfaceAlt stroke-foreground"/>)}</g>
+  <g onClick={()=>act('robot')} className="cursor-pointer"><path d="M32 205L38 186H62L68 205Z" className={`fill-surface ${next==='robot'?'stroke-primary':'stroke-foreground'}`} strokeWidth="2"/><line x1="50" y1="188" x2="72" y2="145" className="stroke-primary" strokeWidth="6" strokeLinecap="round"/><line x1="72" y1="145" x2="95" y2="181" className="stroke-primary" strokeWidth="6" strokeLinecap="round"/></g>
+ </svg>
+ {phase==='rotate'&&<div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-surface text-center"><RotateCw className="h-10 w-10 text-primary"/><p className="font-display font-semibold">Rotate your device to landscape</p><p className="text-sm text-foregroundMuted">The automation line is best explored sideways.</p></div>}
+ <AnimatePresence>{selected&&<motion.div initial={{opacity:0,scale:.8}} animate={{opacity:1,scale:1}} exit={{opacity:0}} className="absolute left-3 top-3 z-20 w-[min(310px,62%)] rounded-xl border border-border bg-surface shadow-xl"><div className="flex items-center justify-between border-b border-border bg-surfaceAlt px-4 py-3"><div className="flex items-center gap-2">{React.createElement(ICON[selected],{className:'h-4 w-4 text-primary'})}<span className="font-display font-semibold">{INFO[selected].title}</span></div><button onClick={()=>{if(editing)save();else{setDraft(content[selected].join('\n'));setEditing(true)}}}>{editing?<Check className="h-4 w-4"/>:<Pencil className="h-4 w-4"/>}</button></div><div className="max-h-48 overflow-auto p-4">{editing?<textarea autoFocus value={draft} onChange={e=>setDraft(e.target.value)} className="h-36 w-full rounded border border-border bg-background p-2 text-sm"/>:<ul className="space-y-2">{content[selected].map((v,i)=><li key={i} className="text-sm">• {v}</li>)}</ul>}</div></motion.div>}</AnimatePresence>
+ </div>
+}

@@ -1,0 +1,1 @@
+import React from'react';import{AutomationScene}from'./AutomationScene';export function AutomationPage():React.ReactElement{return <div className="flex h-full w-full items-center justify-center p-3 sm:p-6"><div className="w-full max-w-5xl"><AutomationScene/></div></div>}
