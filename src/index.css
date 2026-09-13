@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+:root{--color-background:98% 0.006 245;--color-surface:99.5% 0.003 245;--color-surfaceAlt:96% 0.009 245;--color-foreground:28% 0.03 255;--color-foregroundMuted:46% 0.03 255;--color-border:90% 0.012 245;--color-primary:52% 0.16 255;--color-accent:52% 0.16 255;--color-accentForeground:99% 0 0;--color-slate:58% 0.03 250}
+.dark{--color-background:22% 0.02 255;--color-surface:27% 0.02 255;--color-surfaceAlt:31% 0.022 255;--color-foreground:93% 0.01 245;--color-foregroundMuted:73% 0.02 245;--color-border:38% 0.02 255;--color-primary:72% 0.14 255;--color-accent:72% 0.14 255;--color-accentForeground:20% 0.02 255;--color-slate:70% 0.025 250}
+html,body,#root{height:100%}body{margin:0;font-family:'Inter',system-ui,sans-serif;background:oklch(var(--color-background));color:oklch(var(--color-foreground))}}
+@keyframes orbit-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes orbit-spin-rev{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+@keyframes gear-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.orbit-rotor{animation:orbit-spin 55s linear infinite;transform-origin:center}.orbit-counter{animation:orbit-spin-rev 55s linear infinite;transform-origin:center}.orbit-rotor[data-paused='true'],.orbit-counter[data-paused='true']{animation-play-state:paused}
+@keyframes hint-pulse{0%,100%{opacity:.2}50%{opacity:.85}}.hint-pulse{animation:hint-pulse 1.3s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.orbit-rotor,.orbit-counter,.gear-anim{animation:none!important}.hint-pulse{animation:none;opacity:.7}}
+.no-select{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none;touch-action:manipulation}
